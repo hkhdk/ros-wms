@@ -7,7 +7,9 @@ import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.liush.wms.common.QueryPageParam;
 import com.liush.wms.common.Result;
+import com.liush.wms.entity.Menu;
 import com.liush.wms.entity.User;
+import com.liush.wms.service.MenuService;
 import com.liush.wms.service.UserService;
 import freemarker.template.utility.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +33,9 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private MenuService menuService;
+
     @GetMapping("/list")
     public List<User> list() {
         return userService.list();
@@ -46,6 +51,36 @@ public class UserController {
     @PostMapping("/save")
     public Result save(@RequestBody User user) {
         return userService.save(user) ? Result.suc() : Result.fail();
+    }
+
+    //更新
+    @PostMapping("/update")
+    public Result update(@RequestBody User user) {
+        return userService.updateById(user) ? Result.suc() : Result.fail();
+    }
+
+    //删除
+    @GetMapping("/del")
+    public Result del(@RequestParam String id) {
+        return userService.removeById(id) ? Result.suc() : Result.fail();
+    }
+
+    //登录
+    @PostMapping("/login")
+    public Result login(@RequestBody User user) {
+        List list = userService.lambdaQuery()
+                .eq(User::getNo, user.getNo())
+                .eq(User::getPassword, user.getPassword()).list();
+
+        if (list.size() > 0) {
+            User user1 = (User) list.get(0);
+            List menuList = menuService.lambdaQuery().like(Menu::getMenuright, user1.getRoleId()).list();
+            HashMap res = new HashMap();
+            res.put("user", user1);
+            res.put("menu", menuList);
+            return Result.suc(res);
+        }
+        return Result.fail();
     }
 
     //修改

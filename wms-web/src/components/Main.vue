@@ -13,9 +13,9 @@
       </el-select>
       <el-button type="primary" style="margin-left: 5px;" @click="loadPost">查询</el-button>
       <el-button type="success" @click="resetParam">重置</el-button>
-
       <el-button type="primary" style="margin-left: 5px;" @click="add">新增</el-button>
     </div>
+
     <div>
       <el-table :data="tableData"
                 :header-cell-style="{background:'#f2f5fc',color:'#555555'}">
@@ -46,17 +46,25 @@
         <el-table-column prop="phone" label="电话" width="180">
         </el-table-column>
         <el-table-column prop="operate" label="操作">
-          <el-button size="small" type="success">编辑</el-button>
-          <el-button size="small" type="danger">删除</el-button>
+          <template slot-scope="scope">
+            <el-button size="small" type="success" @click="mod(scope.row)">编辑</el-button>
+            <el-popconfirm
+                title="确定删除吗？"
+                @confirm="del(scope.row.id)"
+                style="margin-left: 5px;">
+              <el-button slot="reference" size="small" type="danger">删除</el-button>
+            </el-popconfirm>
+          </template>
         </el-table-column>
       </el-table>
     </div>
+
     <div>
       <el-pagination
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
           :current-page="pageNum"
-          :page-sizes="[2, 5, 10, 20]"
+          :page-sizes="[5, 10, 15, 20]"
           :page-size="pageSize"
           layout="total, sizes, prev, pager, next, jumper"
           :total="total">
@@ -64,7 +72,7 @@
     </div>
 
     <el-dialog
-        title="注册"
+        title="提示"
         :visible.sync="centerDialogVisible"
         width="30%"
         center>
@@ -106,7 +114,6 @@
         <el-button type="primary" @click="save">确 定</el-button>
       </span>
     </el-dialog>
-
   </div>
 </template>
 
@@ -135,7 +142,7 @@ export default {
     };
     return {
       tableData: [],
-      pageSize: 2,
+      pageSize: 5,
       pageNum: 1,
       total: 0,
       name: '',
@@ -190,6 +197,37 @@ export default {
     resetForm() {
       this.$refs.form.resetFields();
     },
+    del(id) {
+      this.$axios.get(this.$httpUrl + '/wms/user/del?id=' + id).then(res => res.data).then(res => {
+        if (res.code == 200) {
+          this.$message({
+            message: '操作成功！',
+            type: 'success'
+          });
+          this.loadPost()
+        } else {
+          this.$message({
+            message: '操作失败！',
+            type: 'error'
+          });
+        }
+
+      })
+    },
+    mod(row) {
+      this.centerDialogVisible = true
+      this.$nextTick(() => {
+        //赋值到表单
+        this.form.id = row.id
+        this.form.no = row.no
+        this.form.name = row.name
+        this.form.password = row.password + ''
+        this.form.age = row.age + ''
+        this.form.sex = row.sex + ''
+        this.form.phone = row.phone
+        this.form.roleId = row.roleId
+      })
+    },
     add() {
       this.centerDialogVisible = true
       this.$nextTick(() => {
@@ -205,7 +243,7 @@ export default {
           });
           this.centerDialogVisible = false
           this.loadPost()
-          // this.resetForm()
+          this.resetForm()
         } else {
           this.$message({
             message: '操作失败！',
@@ -214,17 +252,40 @@ export default {
         }
       });
     },
+    doMod() {
+      this.$axios.post(this.$httpUrl + '/wms/user/update', this.form).then(res => res.data).then(res => {
+        console.log(res)
+        if (res.code == 200) {
+          this.$message({
+            message: '操作成功！',
+            type: 'success'
+          });
+          this.centerDialogVisible = false
+          this.loadPost()
+          this.resetForm()
+        } else {
+          this.$message({
+            message: '操作失败！',
+            type: 'error'
+          });
+        }
+
+      })
+    },
     save() {
       this.$refs.form.validate((valid) => {
         if (valid) {
-          if (!this.form.id) {
-            this.doSave()
+          if (this.form.id) {
+            this.doMod();
+          } else {
+            this.doSave();
           }
         } else {
           console.log('error submit!!');
           return false;
         }
       });
+
     },
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);

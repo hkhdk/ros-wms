@@ -1,6 +1,5 @@
 package com.liush.wms.controller;
 
-
 import com.liush.wms.common.Result;
 import com.liush.wms.entity.Menu;
 import com.liush.wms.service.MenuService;

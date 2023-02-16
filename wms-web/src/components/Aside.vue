@@ -28,7 +28,7 @@ export default {
   data() {
     return {
       // isCollapse: false
-      menu: [
+      /*menu: [
         {
           menuClick: 'Admin',
           menuName: '管路员管理',
@@ -38,7 +38,14 @@ export default {
           menuName: '用户管理',
           menuIcon: 'el-icon-user-solid'
         }
-      ]
+      ]*/
+    }
+  },
+  computed: {
+    "menu": {
+      get() {
+        return this.$store.state.menu
+      }
     }
   },
   props: {

@@ -82,6 +82,7 @@ INSERT INTO `menu` VALUES (3, '003', '仓库管理', '1', NULL, 'Storage', '0,1'
 INSERT INTO `menu` VALUES (4, '004', '物品分类管理', '1', NULL, 'Goodstype', '0,1', 'goodstype/GoodstypeManage', 'el-icon-menu');
 INSERT INTO `menu` VALUES (5, '005', '物品管理 ', '1', NULL, 'Goods', '0,1,2', 'goods/GoodsManage', 'el-icon-s-management');
 INSERT INTO `menu` VALUES (6, '006', '记录管理', '1', NULL, 'Record', '0,1,2', 'record/RecordManage', 'el-icon-s-order');
+INSERT INTO `menu` VALUES (7, '007', '巡检任务管理', '1', NULL, 'Tasks', '0,1,2', 'tasks/NavigationTask', 'el-icon-s-management');
 
 -- ----------------------------
 -- Table structure for record

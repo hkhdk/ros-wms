@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liush.wms.mapper.TasksMapper">
+
+    <select id="pageCC" resultType="com.liush.wms.entity.Tasks">
+        select *
+        from tasks ${ew.customSqlSegment}
+    </select>
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.liush.wms.entity.Tasks">
+        <id column="id" property="id"/>
+        <result column="roomName" property="roomName"/>
+        <result column="result" property="result"/>
+        <result column="createTime" property="createTime"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, roomName, result, createTime
+    </sql>
+
+</mapper>

@@ -39,6 +39,27 @@ INSERT INTO `goods` VALUES (2, '华为手机', 1, 1, 1008, '只限今年售卖')
 INSERT INTO `goods` VALUES (3, '避孕药', 3, 2, 10933, '男女慎用');
 
 -- ----------------------------
+-- Table structure for tasks
+-- ----------------------------
+DROP TABLE IF EXISTS `tasks`;
+CREATE TABLE `tasks`  (
+                          `id` int NOT NULL AUTO_INCREMENT COMMENT '主键',
+                          `room_name` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '巡检房间名',
+                          `result` int NULL COMMENT '房间货物巡检数量结果',
+                          `create_time` datetime NULL DEFAULT NULL COMMENT '创建巡检任务时间',
+                          PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of tasks
+-- ----------------------------
+INSERT INTO `tasks` VALUES (1, '612', NULL, '2024-02-16 15:26:02');
+INSERT INTO `tasks` VALUES (2, '613', NULL, '2024-03-21 17:30:31');
+INSERT INTO `tasks` VALUES (3, '614', NULL, '2024-04-05 19:12:11');
+
+
+
+-- ----------------------------
 -- Table structure for goodstype
 -- ----------------------------
 DROP TABLE IF EXISTS `goodstype`;
@@ -82,6 +103,7 @@ INSERT INTO `menu` VALUES (3, '003', '仓库管理', '1', NULL, 'Storage', '0,1'
 INSERT INTO `menu` VALUES (4, '004', '物品分类管理', '1', NULL, 'Goodstype', '0,1', 'goodstype/GoodstypeManage', 'el-icon-menu');
 INSERT INTO `menu` VALUES (5, '005', '物品管理 ', '1', NULL, 'Goods', '0,1,2', 'goods/GoodsManage', 'el-icon-s-management');
 INSERT INTO `menu` VALUES (6, '006', '记录管理', '1', NULL, 'Record', '0,1,2', 'record/RecordManage', 'el-icon-s-order');
+INSERT INTO `menu` VALUES (7, '007', '巡检任务管理', '1', NULL, 'Tasks', '0,1,2', 'tasks/NavigationTask', 'el-icon-s-management');
 
 -- ----------------------------
 -- Table structure for record

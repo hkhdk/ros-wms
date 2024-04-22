@@ -45,6 +45,8 @@ DROP TABLE IF EXISTS `tasks`;
 CREATE TABLE `tasks`  (
                           `id` int NOT NULL AUTO_INCREMENT COMMENT '主键',
                           `room_name` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '巡检房间名',
+                          `mode` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '巡检模式',
+                          `duration` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '巡检时长',
                           `result` int NULL COMMENT '房间货物巡检数量结果',
                           `create_time` datetime NULL DEFAULT NULL COMMENT '创建巡检任务时间',
                           PRIMARY KEY (`id`) USING BTREE
@@ -53,9 +55,9 @@ CREATE TABLE `tasks`  (
 -- ----------------------------
 -- Records of tasks
 -- ----------------------------
-INSERT INTO `tasks` VALUES (1, '612', NULL, '2024-02-16 15:26:02');
-INSERT INTO `tasks` VALUES (2, '613', NULL, '2024-03-21 17:30:31');
-INSERT INTO `tasks` VALUES (3, '614', NULL, '2024-04-05 19:12:11');
+INSERT INTO `tasks` VALUES (1, '612', '0', '5000', NULL, '2024-02-16 15:26:02');
+INSERT INTO `tasks` VALUES (2, '613', '1', '3000', NULL, '2024-03-21 17:30:31');
+INSERT INTO `tasks` VALUES (3, '614', '0', '1000', NULL, '2024-04-05 19:12:11');
 
 
 

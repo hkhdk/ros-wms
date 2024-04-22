@@ -27,6 +27,12 @@ public class Tasks implements Serializable {
     @ApiModelProperty(value = "巡检房间名")
     private String roomName;
 
+    @ApiModelProperty(value = "巡检模式")
+    private String mode;
+
+    @ApiModelProperty(value = "巡检时长")
+    private String duration;
+
     @ApiModelProperty(value = "房间货物巡检数量结果")
     private Integer result;
 

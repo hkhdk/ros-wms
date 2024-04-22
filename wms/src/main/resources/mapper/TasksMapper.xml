@@ -10,13 +10,15 @@
     <resultMap id="BaseResultMap" type="com.liush.wms.entity.Tasks">
         <id column="id" property="id"/>
         <result column="roomName" property="roomName"/>
+        <result column="mode" property="mode"/>
+        <result column="duration" property="duration"/>
         <result column="result" property="result"/>
         <result column="createTime" property="createTime"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, roomName, result, createTime
+        id, roomName, mode, duration, result, createTime
     </sql>
 
 </mapper>

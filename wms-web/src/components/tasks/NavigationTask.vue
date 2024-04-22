@@ -34,13 +34,17 @@
                 border
                 highlight-current-row
                 @current-change="selectCurrentChange">
-        <el-table-column prop="id" label="ID" width="180">
+        <el-table-column prop="id" label="ID" width="150">
         </el-table-column>
-        <el-table-column prop="roomName" label="巡检房间名" width="250">
+        <el-table-column prop="roomName" label="巡检房间名" width="180">
         </el-table-column>
-        <el-table-column prop="result" label="房间货物巡检数量结果" width="250">
+        <el-table-column prop="mode" label="巡检模式" width="180">
         </el-table-column>
-        <el-table-column prop="createTime" label="创建巡检任务时间" width="250">
+        <el-table-column prop="duration" label="巡检时长" width="180">
+        </el-table-column>
+        <el-table-column prop="result" label="房间货物巡检数量结果" width="180">
+        </el-table-column>
+        <el-table-column prop="createTime" label="创建巡检任务时间" width="180">
         </el-table-column>
         <!-- <el-table-column prop="count" label="数量" width="180">
         </el-table-column>
@@ -209,6 +213,8 @@
         form: { // 提交
           id: '',
           roomName: '',
+          mode: '',
+          duration: '',
           result: '',
           createTime: '',
         },
@@ -302,6 +308,8 @@
           //赋值到表单
           this.form.id = row.id
           this.form.roomName = row.roomName
+          this.form.mode = row.mode
+          this.form.duration = row.duration
           this.form.result = row.result
           this.form.createTime = row.createTime
         //   this.form.count = row.count
@@ -376,6 +384,8 @@
         if (this.roomName === '' || this.mode === '' || this.duration === '') alert('输入信息不完整，请检查!')
         else {
           this.form.roomName = this.roomName
+          this.form.mode = this.mode
+          this.form.duration = this.duration
           this.getCurrentTime()
           this.$axios.post(this.$httpUrl + '/wms/tasks/save', this.form).then(res => res.data).then(res => {
             console.log(res)

@@ -12,6 +12,7 @@
     <artifactId>wms</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>wms</name>
+    <packaging>jar</packaging>
     <description>wms</description>
 
     <properties>

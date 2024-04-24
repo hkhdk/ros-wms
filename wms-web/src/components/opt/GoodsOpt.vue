@@ -1,63 +1,62 @@
 <template>
     <div>
-      <div style="margin-bottom: 5px;">
-        <el-input v-model="roomName" placeholder="请输入巡检房间名" suffix-icon="el-icon-search" style="width: 200px;"
-                  @keyup.enter.native="loadPost"></el-input>
-        <el-select v-model="mode" placeholder="请选择巡检模式" style="margin-left: 5px;">
+      <div style="margin-bottom: 5px;">  
+        <el-select v-model="name" placeholder="请选择房间名" style="margin-left: 5px;">
+        <el-option
+            v-for="item in nameData"
+            :key="item"
+            :label="item"
+            :value="item">
+        </el-option>
+      </el-select>     
+        <!-- <el-select v-model="storage" placeholder="请选择仓库" style="margin-left: 5px;">
           <el-option
-              v-for="item in navigationMode"
-              :key="item"
-              :label="item"
-              :value="item">
+              v-for="item in storageData"
+              :key="item.sequence"
+              :label="item.name"
+              :value="item.sequence">
           </el-option>
-        </el-select>
-        <el-input v-model="duration" placeholder="请输入巡检时长" suffix-icon="el-icon-search" style="width: 200px;"
-                  @keyup.enter.native="loadPost"></el-input>
-        <!-- <el-select v-model="createTime" placeholder="请输入巡检时间" style="margin-left: 5px;">
+        </el-select> -->
+        <!-- <el-select v-model="goodstype" placeholder="请选择分类" style="margin-left: 5px;">
           <el-option
               v-for="item in goodstypeData"
-              :key="item.id"
-              :label="item.roomName"
-              :value="item.id">
+              :key="item.sequence"
+              :label="item.name"
+              :value="item.sequence">
           </el-option>
         </el-select> -->
   
-        <el-button type="primary" style="margin-left: 5px;" @click="doSave">提交任务</el-button>
         <el-button type="primary" style="margin-left: 5px;" @click="loadPost">查询</el-button>
         <el-button type="success" @click="resetParam">重置</el-button>
-        <!-- <el-button type="primary" style="margin-left: 5px;" @click="add" v-if="user.roleId!=2">新增</el-button>
-        <el-button type="primary" style="margin-left: 5px;" @click="inGoods" v-if="user.roleId!=2">入库</el-button>
-        <el-button type="primary" style="margin-left: 5px;" @click="outGoods" v-if="user.roleId!=2">出库</el-button> -->
+        <el-button type="primary" style="margin-left: 5px;" @click="add" v-if="user.roleId!=2">入库</el-button>
+        <!-- <el-button type="primary" style="margin-left: 5px;" @click="inGoods" v-if="user.roleId!=2">入库</el-button> -->
+        <!-- <el-button type="primary" style="margin-left: 5px;" @click="outGoods" v-if="user.roleId!=2">出库</el-button> -->
       </div>
       <el-table :data="tableData"
                 :header-cell-style="{ background: '#f2f5fc', color: '#555555' }"
                 border
                 highlight-current-row
                 @current-change="selectCurrentChange">
-        <el-table-column prop="id" label="ID" width="150">
+        <el-table-column prop="sequence" label="ID" width="400">
         </el-table-column>
-        <el-table-column prop="roomName" label="巡检房间名" width="180">
+        <el-table-column prop="userBlock" label="物品名" width="450">
         </el-table-column>
-        <el-table-column prop="mode" label="巡检模式" width="180">
+        <!-- <el-table-column prop="storage" label="仓库" width="180" :formatter="formatStorage">
         </el-table-column>
-        <el-table-column prop="duration" label="巡检时长" width="180">
+        <el-table-column prop="goodstype" label="分类" width="180" :formatter="formatGoodstype">
         </el-table-column>
-        <!-- <el-table-column prop="result" label="房间货物巡检数量结果" width="180">
-        </el-table-column> -->
-        <el-table-column prop="createTime" label="创建巡检任务时间" width="180">
-        </el-table-column>
-        <!-- <el-table-column prop="count" label="数量" width="180">
+        <el-table-column prop="count" label="数量" width="180">
         </el-table-column>
         <el-table-column prop="remark" label="备注">
         </el-table-column> -->
         <el-table-column prop="operate" label="操作" v-if="user.roleId!=2">
           <template slot-scope="scope">
-            <el-button size="small" type="success" @click="mod(scope.row)">编辑</el-button>
+            <!-- <el-button size="small" type="success" @click="mod(scope.row)">编辑</el-button> -->
             <el-popconfirm
-                title="确定删除吗？"
-                @confirm="del(scope.row.id)"
+                title="确定出库吗？"
+                @confirm="del(scope.row.sequence)"
                 style="margin-left: 5px;">
-              <el-button slot="reference" size="small" type="danger">删除</el-button>
+              <el-button slot="reference" size="small" type="danger">出库</el-button>
             </el-popconfirm>
           </template>
         </el-table-column>
@@ -73,45 +72,44 @@
       </el-pagination>
   
       <el-dialog
-          title="编辑信息"
+          title="物品入库"
           :visible.sync="centerDialogVisible"
           width="30%"
           center>
   
         <el-form ref="form" :rules="rules" :model="form" label-width="80px">
-          <el-form-item label="房间名" prop="roomName">
+          <el-form-item label="物品名" prop="name">
             <el-col :span="20">
-              <el-input v-model="form.roomName"></el-input>
+              <el-input v-model="form.userBlock"></el-input>
             </el-col>
           </el-form-item>
-          <!-- <el-form-item label="巡检结果" prop="result">
+          <el-form-item label="房间名" prop="storage">
             <el-col :span="20">
-              <el-select v-model="form.result" placeholder="请选择仓库" style="margin-left: 5px;">
+              <!-- <el-input v-model="form.name"></el-input> -->
+              <el-select v-model="form.table" placeholder="请选择房间名" style="margin-left: 5px;">
                 <el-option
-                    v-for="item in storageData"
-                    :key="item.id"
-                    :label="item.roomName"
-                    :value="item.id">
+                    v-for="item in nameData"
+                    :key="item"
+                    :label="item"
+                    :value="item">
                 </el-option>
               </el-select>
-              <el-input v-model="form.result"></el-input>
   
             </el-col>
-          </el-form-item> -->
-          <el-form-item label="创建时间" prop="createTime">
+          </el-form-item>
+          <!-- <el-form-item label="分类" prop="goodstype">
             <el-col :span="20">
-              <!-- <el-select v-model="form.createTime" placeholder="请选择分类" style="margin-left: 5px;">
+              <el-select v-model="form.goodstype" placeholder="请选择分类" style="margin-left: 5px;">
                 <el-option
                     v-for="item in goodstypeData"
-                    :key="item.id"
-                    :label="item.roomName"
-                    :value="item.id">
+                    :key="item.sequence"
+                    :label="item.name"
+                    :value="item.sequence">
                 </el-option>
-              </el-select> -->
-              <el-input v-model="form.createTime"></el-input>
+              </el-select>
             </el-col>
           </el-form-item>
-          <!-- <el-form-item label="数量" prop="count">
+          <el-form-item label="数量" prop="count">
             <el-col :span="20">
               <el-input v-model="form.count"></el-input>
             </el-col>
@@ -129,7 +127,7 @@
       </el-dialog>
   
       <el-dialog
-          title="出入库"
+          title="出库"
           :visible.sync="inDialogVisible"
           width="30%"
           center>
@@ -152,7 +150,7 @@
               <el-input v-model="form1.goodsname" readonly></el-input>
             </el-col>
           </el-form-item>
-          <el-form-item label="申请人">
+          <!-- <el-form-item label="申请人">
             <el-col :span="20">
               <el-input v-model="form1.username" readonly @click.native="selectUser"></el-input>
             </el-col>
@@ -166,7 +164,7 @@
             <el-col :span="20">
               <el-input type="textarea" v-model="form1.remark"></el-input>
             </el-col>
-          </el-form-item>
+          </el-form-item> -->
         </el-form>
         <span slot="footer" class="dialog-footer">
       <el-button @click="inDialogVisible = false">取 消</el-button>
@@ -180,7 +178,7 @@
   import SelectUser from "../user/SelectUser";
   
   export default {
-    roomName: "NavigationTask",
+    name: "GoodsManage",
     components: {SelectUser},
     data() {
       let checkCount = (rule, value, callback) => {
@@ -194,29 +192,28 @@
       return {
         user: JSON.parse(sessionStorage.getItem('CurUser')),
         storageData: [],
-        navigationMode: [0, 1],
+        nameData: ['612b_r'],
+        option: '',
         goodstypeData: [],
         tableData: [],
         pageSize: 10,
         pageNum: 1,
         total: 0,
-        roomName: '',
-        result: '',
-        createTime: '',
-        mode: '',
-        duration: '',
+        name: '',
+        storage: '',
+        goodstype: '',
         centerDialogVisible: false,
         inDialogVisible: false,
         innerVisible: false,
         currentRow: {},
         tempUser: {},
-        form: { // 提交
-          id: '',
-          roomName: '',
-          mode: '',
-          duration: '',
-          result: '',
-          createTime: '',
+        form: {
+          sequence: '',
+          name: '',
+          storage: '',
+          goodstype: '',
+          count: '',
+          remark: ''
         },
         form1: {
           goods: '',
@@ -230,14 +227,14 @@
         },
         rules1: {},
         rules: {
-          roomName: [
+          name: [
+            {required: true, message: '请输入物品名', trigger: 'blur'}
+          ],
+          storage: [
             {required: true, message: '请输入房间名', trigger: 'blur'}
           ],
-          result: [
-            {required: true, message: '请输入巡检结果', trigger: 'blur'}
-          ],
-          createTime: [
-            {required: true, message: '请输入创建时间', trigger: 'blur'}
+          goodstype: [
+            {required: true, message: '请选择分类', trigger: 'blur'}
           ],
           count: [
             {required: true, message: '请输入数量', trigger: 'blur'},
@@ -253,8 +250,8 @@
         this.tempUser = val
       },
       confirmUser() {
-        this.form1.username = this.tempUser.roomName
-        this.form1.userid = this.tempUser.id
+        this.form1.username = this.tempUser.name
+        this.form1.userid = this.tempUser.sequence
   
         this.innerVisible = false
       },
@@ -263,17 +260,17 @@
       },
       formatStorage(row) {
         let temp = this.storageData.find(item => {
-          return item.id == row.result
+          return item.sequence == row.storage
         })
   
-        return temp && temp.roomName
+        return temp && temp.name
       },
       formatGoodstype(row) {
         let temp = this.goodstypeData.find(item => {
-          return item.id == row.createTime
+          return item.sequence == row.goodstype
         })
   
-        return temp && temp.roomName
+        return temp && temp.name
       },
       resetForm() {
         this.$refs.form.resetFields();
@@ -281,10 +278,10 @@
       resetInForm() {
         this.$refs.form1.resetFields();
       },
-      del(id) {
-        console.log(id)
-  
-        this.$axios.get(this.$httpUrl + '/wms/tasks/del?id=' + id).then(res => res.data).then(res => {
+      del(sequence) {
+        console.log(sequence)
+        this.option = this.name
+        this.$axios.get(this.$httpUrl + '/wms/Room/del?sequence=' + sequence + '&table=' + this.option).then(res => res.data).then(res => {
           console.log(res)
           if (res.code == 200) {
   
@@ -306,14 +303,12 @@
         this.centerDialogVisible = true
         this.$nextTick(() => {
           //赋值到表单
-          this.form.id = row.id
-          this.form.roomName = row.roomName
-          this.form.mode = row.mode
-          this.form.duration = row.duration
-          this.form.result = row.result
-          this.form.createTime = row.createTime
-        //   this.form.count = row.count
-        //   this.form.remark = row.remark
+          this.form.sequence = row.sequence
+          // this.form.name = row.name
+          // this.form.storage = row.storage
+          // this.form.goodstype = row.goodstype
+          // this.form.count = row.count
+          // this.form.remark = row.remark
         })
       },
       add() {
@@ -322,12 +317,12 @@
         this.$nextTick(() => {
           this.resetForm()
   
-          this.form.id = ''
+          this.form.sequence = ''
         })
   
       },
       inGoods() {
-        if (!this.currentRow.id) {
+        if (!this.currentRow.sequence) {
           alert('请选择记录');
           return;
         }
@@ -336,13 +331,13 @@
           this.resetInForm()
         })
   
-        this.form1.goodsname = this.currentRow.roomName
-        this.form1.goods = this.currentRow.id
-        this.form1.adminId = this.user.id
+        this.form1.goodsname = this.currentRow.name
+        this.form1.goods = this.currentRow.sequence
+        this.form1.adminId = this.user.sequence
         this.form1.action = '1'
       },
       outGoods() {
-        if (!this.currentRow.id) {
+        if (!this.currentRow.sequence) {
           alert('请选择记录');
           return;
         }
@@ -351,70 +346,43 @@
           this.resetInForm()
         })
   
-        this.form1.goodsname = this.currentRow.roomName
-        this.form1.goods = this.currentRow.id
-        this.form1.adminId = this.user.id
+        this.form1.goodsname = this.currentRow.name
+        this.form1.goods = this.currentRow.sequence
+        this.form1.adminId = this.user.sequence
         this.form1.action = '2'
   
       },
       selectUser() {
         this.innerVisible = true
       },
-      getCurrentTime() {
-        //获取当前时间并打印
-        let yy = new Date().getFullYear();
-        let mm = new Date().getMonth()+1;
-        let dd = new Date().getDate();
-        let hh = new Date().getHours();
-        let mf = new Date().getMinutes()<10 ? '0'+new Date().getMinutes() : new Date().getMinutes();
-        let ss = new Date().getSeconds()<10 ? '0'+new Date().getSeconds() : new Date().getSeconds();
-        if (mm >=1 && mm <= 9) {
-          if (dd >= 1 && dd <= 9) this.createTime = yy+'-'+'0'+mm+'-'+'0'+dd+' '+hh+':'+mf+':'+ss;
-          else this.createTime = yy+'-'+'0'+mm+'-'+dd+' '+hh+':'+mf+':'+ss;
-        }
-        else {
-          if (dd >=1 && dd <= 9) this.createTime = yy+'-'+mm+'-'+'0'+dd+' '+hh+':'+mf+':'+ss;
-          else this.createTime = yy+'-'+mm+'-'+dd+' '+hh+':'+mf+':'+ss;
-        }
-
-        this.form.createTime = this.createTime
-      },
-
       doSave() {
-        if (this.roomName === '' || this.mode === '' || this.duration === '') alert('输入信息不完整，请检查!')
-        else {
-          this.form.roomName = this.roomName
-          this.form.mode = this.mode
-          this.form.duration = this.duration
-          this.getCurrentTime()
-          this.$axios.post(this.$httpUrl + '/wms/tasks/save', this.form).then(res => res.data).then(res => {
-            console.log(res)
-            if (res.code == 200) {
-    
-              this.$message({
-                message: '巡检任务创建成功，小车正前往目的地!',
-                type: 'success'
-              });
-              this.centerDialogVisible = false
-              this.loadPost()
-              this.resetForm()
-            } else {
-              this.$message({
-                message: '操作失败！',
-                type: 'error'
-              });
-            }
-    
-          })
-      }
-      },
-      doMod() {
-        this.$axios.post(this.$httpUrl + '/wms/tasks/update', this.form).then(res => res.data).then(res => {
+        this.$axios.post(this.$httpUrl + '/wms/goods/save', this.form).then(res => res.data).then(res => {
           console.log(res)
           if (res.code == 200) {
   
             this.$message({
-              message: '修改成功！',
+              message: '操作成功！',
+              type: 'success'
+            });
+            this.centerDialogVisible = false
+            this.loadPost()
+            this.resetForm()
+          } else {
+            this.$message({
+              message: '操作失败！',
+              type: 'error'
+            });
+          }
+  
+        })
+      },
+      doMod() {
+        this.$axios.post(this.$httpUrl + '/wms/goods/update', this.form).then(res => res.data).then(res => {
+          console.log(res)
+          if (res.code == 200) {
+  
+            this.$message({
+              message: '操作成功！',
               type: 'success'
             });
             this.centerDialogVisible = false
@@ -432,7 +400,7 @@
       save() {
         this.$refs.form.validate((valid) => {
           if (valid) {
-            if (this.form.id) {
+            if (this.form.sequence) {
               this.doMod();
             } else {
               this.doSave();
@@ -477,35 +445,57 @@
         this.loadPost()
       },
       resetParam() {
-        this.roomName = '',
-        this.mode = '',
-        this.duration = '',
-        this.resetForm()
-        // this.result = ''
-        // this.createTime = ''
+        this.name = ''
+        this.storage = ''
+        this.goodstype = ''
       },
-      loadPost() {
-        this.$axios.post(this.$httpUrl + '/wms/tasks/listPage', {
-          pageSize: this.pageSize,
-          pageNum: this.pageNum,
-          param: {
-            roomName: this.roomName,
-            // createTime: this.createTime + '',
-            // result: this.result + ''
-          }
-        }).then(res => res.data).then(res => {
-          console.log(res)
-          if (res.code == 200) {
-            this.tableData = res.data
-            this.total = res.total
-          } else {
-            alert('获取数据失败')
-          }
+      // loadPost() {
+      //   this.$axios.post(this.$httpUrl + '/wms/room/listPage', {
+      //     pageSize: this.pageSize,
+      //     pageNum: this.pageNum,
+      //     param: {
+      //       name: this.name,
+      //       goodstype: this.goodstype + '',
+      //       storage: this.storage + ''
+      //     }
+      //   }).then(res => res.data).then(res => {
+      //     console.log(res)
+      //     if (res.code == 200) {
+      //       this.tableData = res.data
+      //       this.total = res.total
+      //     } else {
+      //       alert('获取数据失败')
+      //     }
   
-        })
-      },
+      //   })
+      // },
+      loadPost() {
+      if (this.name === '') {
+        const a = 0
+        a 
+      } else {
+      this.$axios.post(this.$httpUrl + '/wms/Room/listPage', {
+        pageSize: this.pageSize,
+        pageNum: this.pageNum,
+        param: {
+          name: this.name,
+          // goodstype: this.goodstype + '',
+          // storage: this.storage + ''
+        }
+      }).then(res => res.data).then(res => {
+        console.log(res)
+        if (res.code == 200) {
+          this.tableData = res.data
+          this.total = res.total
+        } else {
+          alert('获取数据失败')
+        }
+
+      })
+    }
+    },
       loadStorage() {
-        this.$axios.get(this.$httpUrl + '/wms/result/list').then(res => res.data).then(res => {
+        this.$axios.get(this.$httpUrl + '/wms/storage/list').then(res => res.data).then(res => {
           console.log(res)
           if (res.code == 200) {
             this.storageData = res.data
@@ -516,7 +506,7 @@
         })
       },
       loadGoodstype() {
-        this.$axios.get(this.$httpUrl + '/wms/createTime/list').then(res => res.data).then(res => {
+        this.$axios.get(this.$httpUrl + '/wms/goodstype/list').then(res => res.data).then(res => {
           console.log(res)
           if (res.code == 200) {
             this.goodstypeData = res.data

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liush.wms.mapper.RoomMapper">
+
+    <select id="pageCC" resultType="com.liush.wms.entity.Room">
+        select *
+        from ${table} ${ew.customSqlSegment}
+    </select>
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.liush.wms.entity.Room">
+        <id column="sequence" property="sequence"/>
+        <result column="userBlock" property="userBlock"/>
+
+    </resultMap>
+
+    <delete id="remove">
+        delete from ${table} where sequence = ${sequence}
+    </delete>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        sequence, userBlock
+    </sql>
+
+</mapper>

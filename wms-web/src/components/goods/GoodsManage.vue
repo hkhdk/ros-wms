@@ -1,56 +1,56 @@
 <template>
   <div>
     <div style="margin-bottom: 5px;">
-      <el-input v-model="name" placeholder="请输入物品名" suffix-icon="el-icon-search" style="width: 200px;"
-                @keyup.enter.native="loadPost"></el-input>
-      <el-select v-model="storage" placeholder="请选择仓库" style="margin-left: 5px;">
+      <!-- <el-input v-model="name" placeholder="请输入房间名" suffix-icon="el-icon-search" style="width: 200px;"
+                @keyup.enter.native="loadPost"></el-input> -->
+      <el-select v-model="name" placeholder="请选择房间名" style="margin-left: 5px;">
         <el-option
-            v-for="item in storageData"
-            :key="item.id"
-            :label="item.name"
-            :value="item.id">
+            v-for="item in nameData"
+            :key="item"
+            :label="item"
+            :value="item">
         </el-option>
       </el-select>
-      <el-select v-model="goodstype" placeholder="请选择分类" style="margin-left: 5px;">
+      <!-- <el-select v-model="goodstype" placeholder="请选择分类" style="margin-left: 5px;">
         <el-option
             v-for="item in goodstypeData"
             :key="item.id"
             :label="item.name"
             :value="item.id">
         </el-option>
-      </el-select>
+      </el-select> -->
 
       <el-button type="primary" style="margin-left: 5px;" @click="loadPost">查询</el-button>
       <el-button type="success" @click="resetParam">重置</el-button>
-      <el-button type="primary" style="margin-left: 5px;" @click="add" v-if="user.roleId!=2">新增</el-button>
+      <!-- <el-button type="primary" style="margin-left: 5px;" @click="add" v-if="user.roleId!=2">新增</el-button>
       <el-button type="primary" style="margin-left: 5px;" @click="inGoods" v-if="user.roleId!=2">入库</el-button>
-      <el-button type="primary" style="margin-left: 5px;" @click="outGoods" v-if="user.roleId!=2">出库</el-button>
+      <el-button type="primary" style="margin-left: 5px;" @click="outGoods" v-if="user.roleId!=2">出库</el-button> -->
     </div>
     <el-table :data="tableData"
               :header-cell-style="{ background: '#f2f5fc', color: '#555555' }"
               border
               highlight-current-row
               @current-change="selectCurrentChange">
-      <el-table-column prop="id" label="ID" width="60">
+      <el-table-column prop="sequence" label="ID" width="400">
       </el-table-column>
-      <el-table-column prop="name" label="物品名" width="180">
+      <el-table-column prop="userBlock" label="物品名" width="500">
       </el-table-column>
-      <el-table-column prop="storage" label="仓库" width="180" :formatter="formatStorage">
+      <!-- <el-table-column prop="storage" label="仓库" width="180" :formatter="formatStorage">
       </el-table-column>
       <el-table-column prop="goodstype" label="分类" width="180" :formatter="formatGoodstype">
       </el-table-column>
       <el-table-column prop="count" label="数量" width="180">
       </el-table-column>
       <el-table-column prop="remark" label="备注">
-      </el-table-column>
-      <el-table-column prop="operate" label="操作" v-if="user.roleId!=2">
+      </el-table-column> -->
+      <el-table-column prop="operate" label="" v-if="user.roleId!=2">
         <template slot-scope="scope">
-          <el-button size="small" type="success" @click="mod(scope.row)">编辑</el-button>
+          <!-- <el-button size="small" type="success" @click="mod(scope.row)">编辑</el-button> -->
           <el-popconfirm
               title="确定删除吗？"
               @confirm="del(scope.row.id)"
               style="margin-left: 5px;">
-            <el-button slot="reference" size="small" type="danger">删除</el-button>
+            <!-- <el-button slot="reference" size="small" type="danger">删除</el-button> -->
           </el-popconfirm>
         </template>
       </el-table-column>
@@ -185,6 +185,7 @@ export default {
     return {
       user: JSON.parse(sessionStorage.getItem('CurUser')),
       storageData: [],
+      nameData: ['612b'],
       goodstypeData: [],
       tableData: [],
       pageSize: 10,
@@ -441,13 +442,17 @@ export default {
       this.goodstype = ''
     },
     loadPost() {
-      this.$axios.post(this.$httpUrl + '/wms/goods/listPage', {
+      if (this.name === '') {
+        const a = 0
+        a 
+      } else {
+      this.$axios.post(this.$httpUrl + '/wms/Room/listPage', {
         pageSize: this.pageSize,
         pageNum: this.pageNum,
         param: {
           name: this.name,
-          goodstype: this.goodstype + '',
-          storage: this.storage + ''
+          // goodstype: this.goodstype + '',
+          // storage: this.storage + ''
         }
       }).then(res => res.data).then(res => {
         console.log(res)
@@ -459,6 +464,7 @@ export default {
         }
 
       })
+    }
     },
     loadStorage() {
       this.$axios.get(this.$httpUrl + '/wms/storage/list').then(res => res.data).then(res => {

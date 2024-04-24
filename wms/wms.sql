@@ -38,6 +38,76 @@ INSERT INTO `goods` VALUES (1, '牙刷', 2, 3, 198, '名牌');
 INSERT INTO `goods` VALUES (2, '华为手机', 1, 1, 1008, '只限今年售卖');
 INSERT INTO `goods` VALUES (3, '避孕药', 3, 2, 10933, '男女慎用');
 
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `612B`
+--
+
+DROP TABLE IF EXISTS `612B`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `612B` (
+                        `sequence` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
+                        `userBlock` varchar(255) DEFAULT NULL COMMENT '数字码',
+                        PRIMARY KEY (`sequence`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `612B`
+--
+
+LOCK TABLES `612B` WRITE;
+/*!40000 ALTER TABLE `612B` DISABLE KEYS */;
+INSERT INTO `612B` VALUES (1,'612B 0001 FFFF FFFF 0001 0000');
+/*!40000 ALTER TABLE `612B` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `612B_r`
+--
+
+DROP TABLE IF EXISTS `612B_r`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `612B_r` (
+                          `sequence` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
+                          `userBlock` varchar(255) DEFAULT NULL COMMENT '数字码',
+                          PRIMARY KEY (`sequence`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `612B_r`
+--
+
+LOCK TABLES `612B_r` WRITE;
+/*!40000 ALTER TABLE `612B_r` DISABLE KEYS */;
+INSERT INTO `612B_r` VALUES (1,'612B 0001 FFFF FFFF 0001 0000'),(2,'612B 0001 FFFF FFFF 0000 0001'),(3,'612B 0001 FFFF FFFF 0000 0002'),(4,'612B 0001 FFFF FFFF 0002 0000'),(5,'612B 0001 FFFF FFFF 0000 0003'),(6,'612B 0001 FFFF FFFF 0003 0000'),(7,'612B 0001 FFFF FFFF 1000 0000'),(8,'612B 0001 FFFF FFFF 2000 0000'),(9,'612B 0001 FFFF FFFF 0000 1000'),(10,'612B 0001 FFFF FFFF 0000 2000'),(11,'612B 0001 FFFF FFFF 1111 1111');
+/*!40000 ALTER TABLE `612B_r` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+
 -- ----------------------------
 -- Table structure for tasks
 -- ----------------------------
@@ -100,12 +170,13 @@ CREATE TABLE `menu`  (
 -- Records of menu
 -- ----------------------------
 INSERT INTO `menu` VALUES (1, '001', '管理员管理', '1', NULL, 'Admin', '0', 'admin/AdminManage.vue', 'el-icon-s-custom');
-INSERT INTO `menu` VALUES (2, '002', '用户管理', '1', NULL, 'User', '0,1', 'user/UserManage.vue', 'el-icon-user-solid');
-INSERT INTO `menu` VALUES (3, '003', '仓库管理', '1', NULL, 'Storage', '0,1', 'storage/StorageManage', 'el-icon-office-building');
-INSERT INTO `menu` VALUES (4, '004', '物品分类管理', '1', NULL, 'Goodstype', '0,1', 'goodstype/GoodstypeManage', 'el-icon-menu');
-INSERT INTO `menu` VALUES (5, '005', '物品管理 ', '1', NULL, 'Goods', '0,1,2', 'goods/GoodsManage', 'el-icon-s-management');
-INSERT INTO `menu` VALUES (6, '006', '记录管理', '1', NULL, 'Record', '0,1,2', 'record/RecordManage', 'el-icon-s-order');
-INSERT INTO `menu` VALUES (7, '007', '巡检任务管理', '1', NULL, 'Tasks', '0,1,2', 'tasks/NavigationTask', 'el-icon-s-management');
+# INSERT INTO `menu` VALUES (2, '002', '用户管理', '1', NULL, 'User', '0,1', 'user/UserManage.vue', 'el-icon-user-solid');
+# INSERT INTO `menu` VALUES (2, '003', '仓库管理', '1', NULL, 'Storage', '0,1', 'storage/StorageManage', 'el-icon-office-building');
+#INSERT INTO `menu` VALUES (3, '004', '物品分类管理', '1', NULL, 'Goodstype', '0,1', 'goodstype/GoodstypeManage', 'el-icon-menu');
+INSERT INTO `menu` VALUES (2, '002', '物品管理', '1', NULL, 'Opt', '0,1,2', 'opt/GoodsOpt', 'el-icon-s-management');
+INSERT INTO `menu` VALUES (3, '003', '物品巡检结果', '1', NULL, 'Goods', '0,1,2', 'goods/GoodsManage', 'el-icon-s-management');
+# INSERT INTO `menu` VALUES (6, '006', '记录管理', '1', NULL, 'Record', '0,1,2', 'record/RecordManage', 'el-icon-s-order');
+INSERT INTO `menu` VALUES (4, '004', '巡检任务管理', '1', NULL, 'Tasks', '0,1,2', 'tasks/NavigationTask', 'el-icon-s-management');
 
 -- ----------------------------
 -- Table structure for record

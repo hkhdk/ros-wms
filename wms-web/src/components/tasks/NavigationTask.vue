@@ -1,8 +1,16 @@
 <template>
     <div>
       <div style="margin-bottom: 5px;">
-        <el-input v-model="roomName" placeholder="请输入巡检房间名" suffix-icon="el-icon-search" style="width: 200px;"
-                  @keyup.enter.native="loadPost"></el-input>
+        <!-- <el-input v-model="roomName" placeholder="请选择巡检房间名" suffix-icon="el-icon-search" style="width: 200px;"
+                  @keyup.enter.native="loadPost"></el-input> -->
+        <el-select v-model="roomName" placeholder="请选择巡检房间名" suffix-icon="el-icon-search" style="width: 200px;">
+        <el-option
+            v-for="item in nameData"
+            :key="item"
+            :label="item"
+            :value="item">
+        </el-option>
+      </el-select>  
         <el-select v-model="mode" placeholder="请选择巡检模式" style="margin-left: 5px;">
           <el-option
               v-for="item in navigationMode"
@@ -24,6 +32,7 @@
   
         <el-button type="primary" style="margin-left: 5px;" @click="doSave">提交任务</el-button>
         <el-button type="primary" style="margin-left: 5px;" @click="loadPost">查询</el-button>
+        <el-button type="primary" style="margin-left: 5px;" @click="camera_show">小车视觉查看</el-button>
         <el-button type="success" @click="resetParam">重置</el-button>
         <!-- <el-button type="primary" style="margin-left: 5px;" @click="add" v-if="user.roleId!=2">新增</el-button>
         <el-button type="primary" style="margin-left: 5px;" @click="inGoods" v-if="user.roleId!=2">入库</el-button>
@@ -195,6 +204,7 @@
         user: JSON.parse(sessionStorage.getItem('CurUser')),
         storageData: [],
         navigationMode: [0, 1],
+        nameData: ['612B', '613B', '614B', '615B', '616B'],
         goodstypeData: [],
         tableData: [],
         pageSize: 10,
@@ -248,6 +258,11 @@
       }
     },
     methods: {
+      camera_show() {
+        const url = 'http://192.168.0.100:8080';
+        window.open(url, '_blank');
+
+      },
       doSelectUser(val) {
         console.log(val)
         this.tempUser = val
@@ -365,7 +380,7 @@
         let yy = new Date().getFullYear();
         let mm = new Date().getMonth()+1;
         let dd = new Date().getDate();
-        let hh = new Date().getHours();
+        let hh = new Date().getHours()<10 ? '0'+new Date().getHours() : new Date().getHours();
         let mf = new Date().getMinutes()<10 ? '0'+new Date().getMinutes() : new Date().getMinutes();
         let ss = new Date().getSeconds()<10 ? '0'+new Date().getSeconds() : new Date().getSeconds();
         if (mm >=1 && mm <= 9) {

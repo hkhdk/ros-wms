@@ -17,12 +17,22 @@ public class RoomServiceImpl extends ServiceImpl<RoomMapper, Room> implements Ro
     private RoomMapper roomMapper;
 
     @Override
-    public IPage pageCC(IPage<Room> page, Wrapper wrapper, String table) {
-        return roomMapper.pageCC(page, wrapper, table);
+    public IPage pageCC(IPage<Room> page, Wrapper wrapper, String room) {
+        return roomMapper.pageCC(page, wrapper, room);
     }
 
     @Override
-    public Boolean removeByTId(String sequence, String table) {
-        return roomMapper.remove(sequence, table);
+    public IPage pageCCs(IPage<Room> page, Wrapper wrapper, String room) {
+        return roomMapper.pageCCs(page, wrapper, room);
+    }
+
+
+    @Override
+    public Boolean removeByTId(String sequence, String room) {
+        return roomMapper.remove(sequence, room);
+    }
+    @Override
+    public Boolean saves(String room, String userBlock) {
+        return roomMapper.saves(room, userBlock);
     }
 }

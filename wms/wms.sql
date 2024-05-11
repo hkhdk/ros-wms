@@ -51,51 +51,55 @@ INSERT INTO `goods` VALUES (3, '避孕药', 3, 2, 10933, '男女慎用');
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `612B`
+-- Table structure for table `task`
 --
 
-DROP TABLE IF EXISTS `612B`;
+DROP TABLE IF EXISTS `612b`;
+DROP TABLE IF EXISTS `612b_r`;
+DROP TABLE IF EXISTS `task`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `612B` (
+CREATE TABLE `task` (
                         `sequence` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
                         `userBlock` varchar(255) DEFAULT NULL COMMENT '数字码',
+                        `roomname` varchar(255) DEFAULT NULL COMMENT '房间号',
                         PRIMARY KEY (`sequence`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `612B`
+-- Dumping data for table `task`
 --
 
-LOCK TABLES `612B` WRITE;
-/*!40000 ALTER TABLE `612B` DISABLE KEYS */;
-INSERT INTO `612B` VALUES (1,'612B 0001 FFFF FFFF 0001 0000');
-/*!40000 ALTER TABLE `612B` ENABLE KEYS */;
+LOCK TABLES `task` WRITE;
+/*!40000 ALTER TABLE `task` DISABLE KEYS */;
+INSERT INTO `task` VALUES (1,'0001 FFFF FFFF 0001 0000', '612B');
+/*!40000 ALTER TABLE `task` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `612B_r`
+-- Table structure for table `task_r`
 --
 
-DROP TABLE IF EXISTS `612B_r`;
+DROP TABLE IF EXISTS `task_r`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `612B_r` (
+CREATE TABLE `task_r` (
                           `sequence` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
                           `userBlock` varchar(255) DEFAULT NULL COMMENT '数字码',
+                          `roomname` varchar(255) DEFAULT NULL COMMENT '房间号',
                           PRIMARY KEY (`sequence`)
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `612B_r`
+-- Dumping data for table `task_r`
 --
 
-LOCK TABLES `612B_r` WRITE;
-/*!40000 ALTER TABLE `612B_r` DISABLE KEYS */;
-INSERT INTO `612B_r` VALUES (1,'612B 0001 FFFF FFFF 0001 0000'),(2,'612B 0001 FFFF FFFF 0000 0001'),(3,'612B 0001 FFFF FFFF 0000 0002'),(4,'612B 0001 FFFF FFFF 0002 0000'),(5,'612B 0001 FFFF FFFF 0000 0003'),(6,'612B 0001 FFFF FFFF 0003 0000'),(7,'612B 0001 FFFF FFFF 1000 0000'),(8,'612B 0001 FFFF FFFF 2000 0000'),(9,'612B 0001 FFFF FFFF 0000 1000'),(10,'612B 0001 FFFF FFFF 0000 2000'),(11,'612B 0001 FFFF FFFF 1111 1111');
-/*!40000 ALTER TABLE `612B_r` ENABLE KEYS */;
+LOCK TABLES `task_r` WRITE;
+/*!40000 ALTER TABLE `task_r` DISABLE KEYS */;
+INSERT INTO `task_r` VALUES (1,'0001 FFFF FFFF 0001 0000', '612B'),(2,'0001 FFFF FFFF 0000 0001', '612B'),(3,'0001 FFFF FFFF 0000 0002', '612B'),(4,'0001 FFFF FFFF 0002 0000', '613B'),(5,'0001 FFFF FFFF 0000 0003', '613B'),(6,'0001 FFFF FFFF 0003 0000', '613B'),(7,'0001 FFFF FFFF 1000 0000', '614B'),(8,'0001 FFFF FFFF 2000 0000', '614B'),(9,'0001 FFFF FFFF 0000 1000', '614B'),(10,'0001 FFFF FFFF 0000 2000', '615B'),(11,'0001 FFFF FFFF 1111 1111', '616B');
+/*!40000 ALTER TABLE `task_r` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 

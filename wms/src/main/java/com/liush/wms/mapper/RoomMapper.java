@@ -13,7 +13,9 @@ import org.apache.ibatis.annotations.Param;
 public interface RoomMapper extends BaseMapper<Room> {
     @SqlParser(filter = true)
 
-    IPage pageCC(IPage<Room> page, @Param(Constants.WRAPPER) Wrapper wrapper, @Param("table")String table);
+    IPage pageCC(IPage<Room> page, @Param(Constants.WRAPPER) Wrapper wrapper, @Param("room")String room);
+    IPage pageCCs(IPage<Room> page, @Param(Constants.WRAPPER) Wrapper wrapper, @Param("room")String room);
 
-    Boolean remove(String sequence, String table);
+    Boolean remove(String sequence, String room);
+    Boolean saves(String room, String userBlock);
 }

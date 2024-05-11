@@ -37,9 +37,9 @@
                 border
                 highlight-current-row
                 @current-change="selectCurrentChange">
-        <el-table-column prop="sequence" label="ID" width="400">
-        </el-table-column>
-        <el-table-column prop="userBlock" label="物品名" width="450">
+        <!-- <el-table-column prop="sequence" label="ID" width="400">
+        </el-table-column> -->
+        <el-table-column prop="userBlock" label="物品名" width="600">
         </el-table-column>
         <!-- <el-table-column prop="storage" label="仓库" width="180" :formatter="formatStorage">
         </el-table-column>
@@ -86,7 +86,7 @@
           <el-form-item label="房间名" prop="storage">
             <el-col :span="20">
               <!-- <el-input v-model="form.name"></el-input> -->
-              <el-select v-model="form.table" placeholder="请选择房间名" style="margin-left: 5px;">
+              <el-select v-model="form.name" placeholder="请选择房间名" style="margin-left: 5px;">
                 <el-option
                     v-for="item in nameData"
                     :key="item"
@@ -122,7 +122,7 @@
         </el-form>
         <span slot="footer" class="dialog-footer">
       <el-button @click="centerDialogVisible = false">取 消</el-button>
-      <el-button type="primary" @click="save">确 定</el-button>
+      <el-button type="primary" @click="doSave">确 定</el-button>
     </span>
       </el-dialog>
   
@@ -192,7 +192,7 @@
       return {
         user: JSON.parse(sessionStorage.getItem('CurUser')),
         storageData: [],
-        nameData: ['612b_r'],
+        nameData: ['612B', '613B', '614B', '615B', '616B'],
         option: '',
         goodstypeData: [],
         tableData: [],
@@ -209,11 +209,8 @@
         tempUser: {},
         form: {
           sequence: '',
+          userBlock: '',
           name: '',
-          storage: '',
-          goodstype: '',
-          count: '',
-          remark: ''
         },
         form1: {
           goods: '',
@@ -281,7 +278,7 @@
       del(sequence) {
         console.log(sequence)
         this.option = this.name
-        this.$axios.get(this.$httpUrl + '/wms/Room/del?sequence=' + sequence + '&table=' + this.option).then(res => res.data).then(res => {
+        this.$axios.get(this.$httpUrl + '/wms/Room/del?sequence=' + sequence + '&room=' + this.option).then(res => res.data).then(res => {
           console.log(res)
           if (res.code == 200) {
   
@@ -356,7 +353,7 @@
         this.innerVisible = true
       },
       doSave() {
-        this.$axios.post(this.$httpUrl + '/wms/goods/save', this.form).then(res => res.data).then(res => {
+        this.$axios.post(this.$httpUrl + '/wms/Room/save', this.form).then(res => res.data).then(res => {
           console.log(res)
           if (res.code == 200) {
   
@@ -474,7 +471,7 @@
         const a = 0
         a 
       } else {
-      this.$axios.post(this.$httpUrl + '/wms/Room/listPage', {
+      this.$axios.post(this.$httpUrl + '/wms/Room/listPages', {
         pageSize: this.pageSize,
         pageNum: this.pageNum,
         param: {

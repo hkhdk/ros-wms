@@ -4,7 +4,12 @@
 
     <select id="pageCC" resultType="com.liush.wms.entity.Room">
         select *
-        from ${table} ${ew.customSqlSegment}
+        from `task` where roomname = '${room}' ${ew.customSqlSegment}
+    </select>
+
+    <select id="pageCCs" resultType="com.liush.wms.entity.Room">
+        select *
+        from `task_r` where roomname = '${room}' ${ew.customSqlSegment}
     </select>
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.liush.wms.entity.Room">
@@ -14,12 +19,16 @@
     </resultMap>
 
     <delete id="remove">
-        delete from ${table} where sequence = ${sequence}
+        delete from task_r where roomname = '${room}' and sequence = ${sequence}
     </delete>
+    <insert id="saves">
+        insert into task_r (userBlock, roomname) VALUES ('${userBlock}', '${room}')
+    </insert>
+
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        sequence, userBlock
+        sequence, userBlock, roomname
     </sql>
 
 </mapper>

@@ -24,5 +24,9 @@ public class Room implements Serializable {
     @ApiModelProperty(value = "数字码")
     private String userBlock;
 
+    @ApiModelProperty(value = "房间号")
+    private String name;
+
+
 
 }

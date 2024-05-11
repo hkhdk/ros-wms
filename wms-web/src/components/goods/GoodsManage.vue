@@ -31,9 +31,9 @@
               border
               highlight-current-row
               @current-change="selectCurrentChange">
-      <el-table-column prop="sequence" label="ID" width="400">
-      </el-table-column>
-      <el-table-column prop="userBlock" label="物品名" width="500">
+      <!-- <el-table-column prop="sequence" label="ID" width="400">
+      </el-table-column> -->
+      <el-table-column prop="userBlock" label="识别到的物品名" width="600">
       </el-table-column>
       <!-- <el-table-column prop="storage" label="仓库" width="180" :formatter="formatStorage">
       </el-table-column>
@@ -185,7 +185,7 @@ export default {
     return {
       user: JSON.parse(sessionStorage.getItem('CurUser')),
       storageData: [],
-      nameData: ['612b'],
+      nameData: ['612B', '613B', '614B', '615B', '616B'],
       goodstypeData: [],
       tableData: [],
       pageSize: 10,

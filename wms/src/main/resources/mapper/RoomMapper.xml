@@ -3,8 +3,8 @@
 <mapper namespace="com.liush.wms.mapper.RoomMapper">
 
     <select id="pageCC" resultType="com.liush.wms.entity.Room">
-        select *
-        from `task` where roomname = '${room}' ${ew.customSqlSegment}
+        select task.sequence, task.userBlock, task_r.good
+        from `task`, `task_r` where task.roomname = '${room}' and task.userBlock = task_r.userBlock
     </select>
 
     <select id="pageCCs" resultType="com.liush.wms.entity.Room">
@@ -14,7 +14,9 @@
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.liush.wms.entity.Room">
         <id column="sequence" property="sequence"/>
+        <result column="good" property="good"/>
         <result column="userBlock" property="userBlock"/>
+        <result column="roomname" property="name"/>
 
     </resultMap>
 
@@ -22,7 +24,7 @@
         delete from task_r where roomname = '${room}' and sequence = ${sequence}
     </delete>
     <insert id="saves">
-        insert into task_r (userBlock, roomname) VALUES ('${userBlock}', '${room}')
+        insert into task_r (good, userBlock, roomname) VALUES ('${good}', '${userBlock}', '${room}')
     </insert>
 
 

@@ -1,16 +1,16 @@
 <template>
   <div>
     <div style="margin-bottom: 5px;">
-      <!-- <el-input v-model="name" placeholder="请输入房间名" suffix-icon="el-icon-search" style="width: 200px;"
-                @keyup.enter.native="loadPost"></el-input> -->
-      <el-select v-model="name" placeholder="请选择房间名" style="margin-left: 5px;">
+      <el-input v-model="name" placeholder="请输入房间名" suffix-icon="el-icon-search" style="width: 200px;"
+                @keyup.enter.native="loadPost"></el-input>
+      <!-- <el-select v-model="name" placeholder="请选择房间名" style="margin-left: 5px;">
         <el-option
             v-for="item in nameData"
             :key="item"
             :label="item"
             :value="item">
         </el-option>
-      </el-select>
+      </el-select> -->
       <!-- <el-select v-model="goodstype" placeholder="请选择分类" style="margin-left: 5px;">
         <el-option
             v-for="item in goodstypeData"
@@ -33,7 +33,9 @@
               @current-change="selectCurrentChange">
       <!-- <el-table-column prop="sequence" label="ID" width="400">
       </el-table-column> -->
-      <el-table-column prop="userBlock" label="识别到的物品名" width="600">
+      <el-table-column prop="good" label="识别到的物品名" width="300">
+      </el-table-column>
+      <el-table-column prop="userBlock" label="识别到的标签码" width="300">
       </el-table-column>
       <!-- <el-table-column prop="storage" label="仓库" width="180" :formatter="formatStorage">
       </el-table-column>

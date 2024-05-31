@@ -17,5 +17,5 @@ public interface RoomMapper extends BaseMapper<Room> {
     IPage pageCCs(IPage<Room> page, @Param(Constants.WRAPPER) Wrapper wrapper, @Param("room")String room);
 
     Boolean remove(String sequence, String room);
-    Boolean saves(String room, String userBlock);
+    Boolean saves(String room, String userBlock, String good);
 }

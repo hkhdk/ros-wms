@@ -32,7 +32,7 @@ public class RoomServiceImpl extends ServiceImpl<RoomMapper, Room> implements Ro
         return roomMapper.remove(sequence, room);
     }
     @Override
-    public Boolean saves(String room, String userBlock) {
-        return roomMapper.saves(room, userBlock);
+    public Boolean saves(String room, String userBlock, String good) {
+        return roomMapper.saves(room, userBlock, good);
     }
 }

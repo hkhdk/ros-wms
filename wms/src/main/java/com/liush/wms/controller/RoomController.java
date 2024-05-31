@@ -23,7 +23,8 @@ public class RoomController {
     //新增
     @PostMapping("/save")
     public Result save(@RequestBody Room room) {
-        return roomService.saves(room.getName(), room.getUserBlock()) ? Result.suc() : Result.fail();
+        System.out.println(room);
+        return roomService.saves(room.getName(), room.getUserBlock(), room.getGood()) ? Result.suc() : Result.fail();
     }
 
     //更新

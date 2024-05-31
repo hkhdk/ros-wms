@@ -21,6 +21,10 @@ public class Room implements Serializable {
     @TableId(value = "sequence", type = IdType.AUTO)
     private Integer sequence;
 
+    @ApiModelProperty(value = "物品名")
+    private String good;
+
+
     @ApiModelProperty(value = "数字码")
     private String userBlock;
 

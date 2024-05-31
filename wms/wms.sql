@@ -73,7 +73,9 @@ CREATE TABLE `task` (
 
 LOCK TABLES `task` WRITE;
 /*!40000 ALTER TABLE `task` DISABLE KEYS */;
-INSERT INTO `task` VALUES (1,'0001 FFFF FFFF 0001 0000', '612B');
+INSERT INTO `task` VALUES (1, '0001 FFFF FFFF 0001 0000', '612B'),
+                          (2, '0001 FFFF FFFF 0000 0002', '612B'),
+                          (3, '0001 FFFF FFFF 0003 0000', '613B');
 /*!40000 ALTER TABLE `task` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -86,6 +88,7 @@ DROP TABLE IF EXISTS `task_r`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `task_r` (
                           `sequence` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
+                          `good` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '物品名',
                           `userBlock` varchar(255) DEFAULT NULL COMMENT '数字码',
                           `roomname` varchar(255) DEFAULT NULL COMMENT '房间号',
                           PRIMARY KEY (`sequence`)
@@ -98,7 +101,7 @@ CREATE TABLE `task_r` (
 
 LOCK TABLES `task_r` WRITE;
 /*!40000 ALTER TABLE `task_r` DISABLE KEYS */;
-INSERT INTO `task_r` VALUES (1,'0001 FFFF FFFF 0001 0000', '612B'),(2,'0001 FFFF FFFF 0000 0001', '612B'),(3,'0001 FFFF FFFF 0000 0002', '612B'),(4,'0001 FFFF FFFF 0002 0000', '613B'),(5,'0001 FFFF FFFF 0000 0003', '613B'),(6,'0001 FFFF FFFF 0003 0000', '613B'),(7,'0001 FFFF FFFF 1000 0000', '614B'),(8,'0001 FFFF FFFF 2000 0000', '614B'),(9,'0001 FFFF FFFF 0000 1000', '614B'),(10,'0001 FFFF FFFF 0000 2000', '615B'),(11,'0001 FFFF FFFF 1111 1111', '616B');
+INSERT INTO `task_r` VALUES (1,'牙刷', '0001 FFFF FFFF 0001 0000', '612B'),(2,'毛巾', '0001 FFFF FFFF 0000 0001', '612B'),(3,'电池', '0001 FFFF FFFF 0000 0002', '612B'),(4,'扳手','0001 FFFF FFFF 0002 0000', '613B'),(5,'面包', '0001 FFFF FFFF 0000 0003', '613B'),(6,'舵机', '0001 FFFF FFFF 0003 0000', '613B'),(7,'机器狗', '0001 FFFF FFFF 1000 0000', '614B'),(8,'手表', '0001 FFFF FFFF 2000 0000', '614B'),(9,'蛋糕', '0001 FFFF FFFF 0000 1000', '614B'),(10,'手套','0001 FFFF FFFF 0000 2000', '615B'),(11,'纸箱', '0001 FFFF FFFF 1111 1111', '616B');
 /*!40000 ALTER TABLE `task_r` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -123,15 +126,16 @@ CREATE TABLE `tasks`  (
                           `duration` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '巡检时长',
                           `result` int NULL COMMENT '房间货物巡检数量结果',
                           `create_time` datetime NULL DEFAULT NULL COMMENT '创建巡检任务时间',
+                          `status` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '状态',
                           PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of tasks
 -- ----------------------------
-INSERT INTO `tasks` VALUES (1, '612', '0', '5000', NULL, '2024-02-16 15:26:02');
-INSERT INTO `tasks` VALUES (2, '613', '1', '3000', NULL, '2024-03-21 17:30:31');
-INSERT INTO `tasks` VALUES (3, '614', '0', '1000', NULL, '2024-04-05 19:12:11');
+INSERT INTO `tasks` VALUES (1, '612B', '0', '5000', NULL, '2024-05-30 15:26:02', '未前往');
+INSERT INTO `tasks` VALUES (2, '613B', '1', '3000', NULL, '2024-05-30 17:30:31', '未前往');
+INSERT INTO `tasks` VALUES (3, '614B', '0', '1000', NULL ,'2024-05-30 19:12:11', '未前往');
 
 
 

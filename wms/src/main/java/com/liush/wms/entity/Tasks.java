@@ -41,6 +41,10 @@ public class Tasks implements Serializable {
     @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 
+    @ApiModelProperty(value = "状态")
+    private String status;
+
+
 
 
 }

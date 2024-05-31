@@ -9,5 +9,5 @@ public interface RoomService extends IService<Room> {
     IPage pageCC(IPage<Room> page, Wrapper wrapper, String room);
     IPage pageCCs(IPage<Room> page, Wrapper wrapper, String room);
     Boolean removeByTId(String sequence, String room);
-    Boolean saves(String room, String userBlock);
+    Boolean saves(String room, String userBlock, String good);
 }

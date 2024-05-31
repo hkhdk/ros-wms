@@ -1,16 +1,16 @@
 <template>
     <div>
       <div style="margin-bottom: 5px;">
-        <!-- <el-input v-model="roomName" placeholder="请选择巡检房间名" suffix-icon="el-icon-search" style="width: 200px;"
-                  @keyup.enter.native="loadPost"></el-input> -->
-        <el-select v-model="roomName" placeholder="请选择巡检房间名" suffix-icon="el-icon-search" style="width: 200px;">
+        <el-input v-model="roomName" placeholder="请输入巡检房间名" suffix-icon="el-icon-search" style="width: 200px;"
+                  @keyup.enter.native="loadPost"></el-input>
+        <!-- <el-select v-model="roomName" placeholder="请选择巡检房间名" suffix-icon="el-icon-search" style="width: 200px;">
         <el-option
             v-for="item in nameData"
             :key="item"
             :label="item"
             :value="item">
         </el-option>
-      </el-select>  
+      </el-select>   -->
         <el-select v-model="mode" placeholder="请选择巡检模式" style="margin-left: 5px;">
           <el-option
               v-for="item in navigationMode"
@@ -45,15 +45,17 @@
                 @current-change="selectCurrentChange">
         <el-table-column prop="id" label="ID" width="150">
         </el-table-column>
-        <el-table-column prop="roomName" label="巡检房间名" width="180">
+        <el-table-column prop="roomName" label="巡检房间名" width="160">
         </el-table-column>
-        <el-table-column prop="mode" label="巡检模式" width="180">
+        <el-table-column prop="mode" label="巡检模式" width="160">
         </el-table-column>
-        <el-table-column prop="duration" label="巡检时长" width="180">
+        <el-table-column prop="duration" label="巡检时长" width="160">
         </el-table-column>
         <!-- <el-table-column prop="result" label="房间货物巡检数量结果" width="180">
         </el-table-column> -->
-        <el-table-column prop="createTime" label="创建巡检任务时间" width="180">
+        <el-table-column prop="createTime" label="创建巡检任务时间" width="160">
+        </el-table-column>
+        <el-table-column prop="status" label="状态" width="160">
         </el-table-column>
         <!-- <el-table-column prop="count" label="数量" width="180">
         </el-table-column>
@@ -227,6 +229,7 @@
           duration: '',
           result: '',
           createTime: '',
+          status: '',
         },
         form1: {
           goods: '',
@@ -327,6 +330,7 @@
           this.form.duration = row.duration
           this.form.result = row.result
           this.form.createTime = row.createTime
+          this.form.status = row.status
         //   this.form.count = row.count
         //   this.form.remark = row.remark
         })
@@ -401,6 +405,7 @@
           this.form.roomName = this.roomName
           this.form.mode = this.mode
           this.form.duration = this.duration
+          this.form.status = '未前往'
           this.getCurrentTime()
           this.$axios.post(this.$httpUrl + '/wms/tasks/save', this.form).then(res => res.data).then(res => {
             console.log(res)

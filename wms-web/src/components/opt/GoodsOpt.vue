@@ -1,14 +1,16 @@
 <template>
     <div>
       <div style="margin-bottom: 5px;">  
-        <el-select v-model="name" placeholder="请选择房间名" style="margin-left: 5px;">
+        <el-input v-model="name" placeholder="请输入房间名" suffix-icon="el-icon-search" style="width: 200px;"
+                @keyup.enter.native="loadPost"></el-input>
+        <!-- <el-select v-model="name" placeholder="请选择房间名" style="margin-left: 5px;">
         <el-option
             v-for="item in nameData"
             :key="item"
             :label="item"
             :value="item">
         </el-option>
-      </el-select>     
+      </el-select>      -->
         <!-- <el-select v-model="storage" placeholder="请选择仓库" style="margin-left: 5px;">
           <el-option
               v-for="item in storageData"
@@ -39,7 +41,9 @@
                 @current-change="selectCurrentChange">
         <!-- <el-table-column prop="sequence" label="ID" width="400">
         </el-table-column> -->
-        <el-table-column prop="userBlock" label="物品名" width="600">
+        <el-table-column prop="good" label="物品名" width="300">
+        </el-table-column>
+        <el-table-column prop="userBlock" label="标签码" width="300">
         </el-table-column>
         <!-- <el-table-column prop="storage" label="仓库" width="180" :formatter="formatStorage">
         </el-table-column>
@@ -78,22 +82,30 @@
           center>
   
         <el-form ref="form" :rules="rules" :model="form" label-width="80px">
-          <el-form-item label="物品名" prop="name">
+
+          <el-form-item label="物品名" prop="good">
+            <el-col :span="20">
+              <el-input v-model="form.good"></el-input>
+            </el-col>
+          </el-form-item>
+
+          <el-form-item label="标签码" prop="userBlock">
             <el-col :span="20">
               <el-input v-model="form.userBlock"></el-input>
             </el-col>
           </el-form-item>
-          <el-form-item label="房间名" prop="storage">
+
+          <el-form-item label="房间名" prop="name">
             <el-col :span="20">
-              <!-- <el-input v-model="form.name"></el-input> -->
-              <el-select v-model="form.name" placeholder="请选择房间名" style="margin-left: 5px;">
+              <el-input v-model="form.name"></el-input>
+              <!-- <el-select v-model="form.name" placeholder="请选择房间名" style="margin-left: 5px;">
                 <el-option
                     v-for="item in nameData"
                     :key="item"
                     :label="item"
                     :value="item">
                 </el-option>
-              </el-select>
+              </el-select> -->
   
             </el-col>
           </el-form-item>
@@ -209,8 +221,9 @@
         tempUser: {},
         form: {
           sequence: '',
+          good: '',  // 物品名
           userBlock: '',
-          name: '',
+          name: '', // 房间名
         },
         form1: {
           goods: '',
@@ -224,14 +237,14 @@
         },
         rules1: {},
         rules: {
-          name: [
+          good: [
             {required: true, message: '请输入物品名', trigger: 'blur'}
           ],
-          storage: [
+          name: [
             {required: true, message: '请输入房间名', trigger: 'blur'}
           ],
-          goodstype: [
-            {required: true, message: '请选择分类', trigger: 'blur'}
+          userBlock: [
+            {required: true, message: '请输入标签码', trigger: 'blur'}
           ],
           count: [
             {required: true, message: '请输入数量', trigger: 'blur'},

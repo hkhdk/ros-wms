@@ -9,7 +9,7 @@ import router from "@/router";
 import store from './store';
 
 Vue.prototype.$axios = axios;
-Vue.prototype.$httpUrl = 'http://localhost:8090'
+Vue.prototype.$httpUrl = 'http://192.168.0.100:8090'
 Vue.config.productionTip = false
 // Vue.use(ElementUI);
 Vue.use(VueRouter);
